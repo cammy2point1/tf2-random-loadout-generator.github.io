@@ -4,30 +4,186 @@
 }
 
 body {
-    font-family: "tf2build";
+    font-family: 'tf2build';
+    color: black;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex-grow: 1; /* Allows main content to grow and take available space */
+    overflow: auto;
+    padding: 10px;
+}
+
+/*Class emblem stuff*/
+.radio-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+    height: 80vh; /* Adjust as needed to fit your layout */
+    overflow: hidden; /* Hide overflow to ensure no scrolling */
+}
+
+.radio-container label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 50%; /* Adjust width to fit buttons in columns */
+    max-height: calc(100% / 5.5); /* 5 rows if you want to fit 10 items */
     box-sizing: border-box;
 }
 
-header {
-    background-color: #333;
-    padding: 10px 0;
+.radio-container input[type="radio"] {
+    display: none;
 }
 
+.radio-container img {
+    max-width: 100%;
+    height: auto;
+    transition: filter 0.3s;
+}
+
+.radio-container input[type="radio"]:checked + img {
+    filter: brightness(60%);
+}
+
+/* Media query for 2 columns layout */
+@media (min-width: 600px) {
+    .radio-container label {
+        max-width: 45%; /* Two columns with some space in between */
+    }
+}
+
+/* Media query for 1 column layout on smaller screens */
+@media (max-width: 600px) {
+    .radio-container label {
+        width: 100%; /* Full width for single column layout */
+    }
+}
+
+.quick-generate-btn{
+    font-family: 'tf2build';
+    background-color: #444;
+    font-size: 1vw; color: white;
+    border-style: none;
+    margin-top: 10px;
+    padding: 2% 20%;
+}
+
+table {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    border-collapse: collapse;
+    max-height: 80vh; /* Limit table height to viewport height */
+    overflow: hidden; /* Prevent content overflow */
+}
+td {
+    vertical-align: top;
+    
+}
+#quick-loadout-display {
+    border-radius: 10px;
+    padding: 10px;
+    border-spacing: 10px;
+    overflow-y: auto; /* Allow vertical scrolling if content exceeds height */
+}
+#quick-loadout-display img {
+    max-width: 100%;
+    height: auto;
+}
+header {
+    background: #444;
+    color: white;
+    padding: 10px;
+}
 nav a {
     color: white;
     text-decoration: none;
     margin: 0 10px;
+    font-size: 0.8vw;
 }
 
-nav a:hover {
-    text-decoration: underline;
+/*Loadout display stuff*/
+/* Ensure container takes up the full height of the viewport without overflow */
+.loadout-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 94vh; 
+    max-width: 75vh;
+    overflow: hidden; 
 }
 
-main {
-    padding: 20px;
+
+/* Table stays within the viewport */
+.loadout-table {
+    background-color: #333;
+    border-radius: 10px;
+    padding: 10px;
+    border-spacing: 10px;
+    table-layout: fixed;
+    max-height: 100%; /* Restricts table height to container */
 }
+
+/* Weapon cell takes 50% width and adjusts height */
+.loadout-weapon-cell {
+    margin: 10px;
+    width: 100%;
+    vertical-align: top;
+    height: 100%; /* Ensure it takes full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute weapon slots evenly */
+}
+
+/* Each weapon slot adjusts based on the available space */
+.weapon-slot {
+    background-color: #444;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 2px solid #666;
+    text-align: center;
+    flex-grow: 1; /* Ensures slots grow evenly */
+    max-height: 20vh; /* Adjusts max height relative to viewport */
+}
+
+/* Weapon images resize relative to the slot height */
+.weapon-slot img {
+    max-width: 100%;
+    max-height: 100%; /* Prevents image overflow */
+    object-fit: contain; /* Keeps the image contained */
+}
+
+/* Weapon name stays under the image */
+.weapon-name {
+    font-family: 'tf2build';
+    color: yellow;
+    margin: 0;
+    font-size: 1vw; /* Use relative font size */
+}
+
+/* Class image cell fits within the viewport */
+.class-image-cell {
+    width: 50%;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+/* Class image fits within its container */
+.class-image {
+    width: 90%;
+    height: auto;
+    max-height: 70vh; /* Limits the class image to a maximum viewport height */
+}
+
 
 /* Update CSS to target nested structure */
 .tiered-menu .top-tier {
