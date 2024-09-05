@@ -108,28 +108,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const quickLoadoutDisplay = document.getElementById("quick-loadout-display");
     const reskinCheckbox = document.getElementById("reskin-checkbox");
 
-    // Populate class selection with radio buttons
-    Object.keys(weaponData).forEach(className => {
-        const label = document.createElement("label");
-        const input = document.createElement("input");
-        const img = document.createElement("img");
-
-        input.type = "radio";
-        input.name = "class";
-        input.value = className;
-
-        img.src = `icons/classes/${className.charAt(0).toUpperCase() + className.slice(1)}_emblem_RED.png`;
-        img.alt = className.charAt(0).toUpperCase() + className.slice(1);
-
-        label.appendChild(input);
-        label.appendChild(img);
-
-        classContainer.appendChild(label);
-    });
-
-    // Set default selection to random
-    document.querySelector('input[name="class"][value="random"]').checked = true;
-
     // Enable generate button when a class is selected
     classContainer.addEventListener("change", function() {
         quickGenerateBtn.disabled = !document.querySelector('input[name="class"]:checked');
@@ -183,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return loadout;
     }
 
-    function displayLoadout(loadout, displayElement) {
+    function displayLoadout(loadout) {
         function getWeaponImagePath(className, slot, weapon) {
             const sanitizedWeaponName = weapon.replace(/ /g, '_');
             return `icons/weapons/${className}/${slot}/${sanitizedWeaponName}.png`;
@@ -193,52 +171,37 @@ document.addEventListener("DOMContentLoaded", function() {
             return `icons/classes/${className}.png`;
         }
     
-        // Generate the table with specific styles
-        let loadoutHTML = `
-            <div style="display: flex; justify-content: center; align-items: center;">
-                <table style="background-color: #333; border-radius: 10px; padding: 10px; border-spacing: 10px; table-layout: fixed;">
-                    <tr>
-                        <td style="width: 50%; vertical-align: top;">
-                            <div style="background-color: #444; border-radius: 10px; padding: 10px; margin-bottom: 10px; border: 2px solid #666; text-align: center;">
-                                <img src="${getWeaponImagePath(loadout.class, 'primary', loadout.primary)}" style="max-width: 50%; height: auto; margin-top: 0px;">
-                                <p style="font-family: 'tf2build'; color: yellow; margin-top: 0px; font-size: 1.5vw; margin-bottom: 0;">${loadout.primary}</p>
-                            </div>
-                            <div style="background-color: #444; border-radius: 10px; padding: 10px; margin-bottom: 10px; border: 2px solid #666; text-align: center;">
-                                <img src="${getWeaponImagePath(loadout.class, 'secondary', loadout.secondary)}" style="max-width: 50%; height: auto; margin-top: 0px;">
-                                <p style="font-family: 'tf2build'; color: yellow; margin-top: 0px; font-size: 1.5vw; margin-bottom: 0;">${loadout.secondary}</p>
-                            </div>
-                            <div style="background-color: #444; border-radius: 10px; padding: 10px;  border: 2px solid #666; text-align: center;">
-                                <img src="${getWeaponImagePath(loadout.class, 'melee', loadout.melee)}" style="max-width: 50%; height: auto; margin-top: 0px;">
-                                <p style="font-family: 'tf2build'; color: yellow; margin-top: 0px; font-size: 1.5vw; margin-bottom: 0;">${loadout.melee}</p>
-                            </div>
-        `;
+        // Set images and weapon names
+        document.getElementById('primary-img').src = getWeaponImagePath(loadout.class, 'primary', loadout.primary);
+        document.getElementById('primary-name').textContent = loadout.primary;
     
-        if (loadout.class === "spy") {
-            loadoutHTML += `
-                            <div style="background-color: #444; border-radius: 10px; padding: 10px; margin-top: 10px; border: 2px solid #666; text-align: center;">
-                                <img src="${getWeaponImagePath(loadout.class, 'sapper', loadout.sapper)}" style="max-width: 50%; height: auto; margin-top: 0px;">
-                                <p style="font-family: 'tf2build'; color: yellow; margin-top: 0px; font-size: 1.5vw; margin-bottom: 0;">${loadout.sapper}</p>
-                            </div>
-            `;
-        } else if (loadout.class === "engineer") {
-            loadoutHTML += `
-                            <div style="background-color: #444; border-radius: 10px; padding: 10px; margin-top: 10px; border: 2px solid #666; text-align: center;">
-                                <img src="${getWeaponImagePath(loadout.class, 'pda', loadout.pda)}" style="max-width: 50%; height: auto; margin-top: 0px;">
-                                <p style="font-family: 'tf2build'; color: yellow; margin-top: 0px; font-size: 1.5vw; margin-bottom: 0;">${loadout.pda}</p>
-                            </div>
-            `;
+        document.getElementById('secondary-img').src = getWeaponImagePath(loadout.class, 'secondary', loadout.secondary);
+        document.getElementById('secondary-name').textContent = loadout.secondary;
+    
+        document.getElementById('melee-img').src = getWeaponImagePath(loadout.class, 'melee', loadout.melee);
+        document.getElementById('melee-name').textContent = loadout.melee;
+    
+        // Handle extra slot (sapper for Spy or PDA for Engineer)
+        const extraSlot = document.getElementById('extra-slot');
+        const extraImg = document.getElementById('extra-img');
+        const extraName = document.getElementById('extra-name');
+    
+        if (loadout.class === 'spy') {
+            extraSlot.style.visibility = 'visible';
+            extraImg.src = getWeaponImagePath(loadout.class, 'sapper', loadout.sapper);
+            extraName.textContent = loadout.sapper;
+        } else if (loadout.class === 'engineer') {
+            extraSlot.style.visibility = 'visible';
+            extraImg.src = getWeaponImagePath(loadout.class, 'pda', loadout.pda);
+            extraName.textContent = loadout.pda;
+        } else {
+            extraSlot.style.visibility = 'hidden';
         }
     
-        loadoutHTML += `
-                        </td>
-                        <td style="max-width: 50%; text-align: center; vertical-align: middle; padding: 10px;">
-                            <img src="${getClassImagePath(loadout.class)}" alt="${loadout.class}" style="width: 90%; height: auto;">
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        `;
-    
-        displayElement.innerHTML = loadoutHTML;
+        // Set class image
+        const classImg = document.getElementById('class-img');
+        classImg.src = getClassImagePath(loadout.class);
+        classImg.alt = loadout.class;
     }
+    
 });
