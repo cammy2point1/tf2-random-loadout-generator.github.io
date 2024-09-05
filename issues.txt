@@ -1,0 +1,10 @@
+* Fix error for when all available items are banned
+* Checkbox to include reskins
+* Mvm mode? Disallow certain demo loadouts?
+* Checkbox for select/deselect all classes
+* Generate multiple loadouts at a time (1-6)
+* Cosmetic changes
+	- Centre Page
+	- Add loadout screen from game
+	- Change dropdowns to match in-game style
+	- Animations?

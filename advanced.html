@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TF2 Loadout Randomizer - Advanced Generate</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Quick Generate</a>
+            <a href="advanced.html">Advanced Generate</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Advanced Generate</h1>
+        <h2>Ban Classes</h2>
+        <div id="class-ban-section">
+            <!-- Class ban checkboxes will be inserted here -->
+        </div>
+        <h2>Ban Weapons</h2>
+        <div id="weapon-ban-section">
+            <!-- Weapon ban nested menus will be inserted here -->
+        </div>
+        <div>
+            <label for="reskin-checkbox">Enable Weapon Reskins:</label>
+            <input type="checkbox" id="reskin-checkbox">
+        </div>
+        <button id="adv-generate-btn">Generate Loadout</button>
+        <div id="adv-loadout-display"></div>
+    </main>
+    <script src="advanced.js"></script>
+</body>
+</html>

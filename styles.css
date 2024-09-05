@@ -1,0 +1,72 @@
+@font-face {
+    font-family: 'tf2build';
+    src: url(tf2build.ttf);
+}
+
+body {
+    font-family: "tf2build";
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #333;
+    padding: 10px 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+}
+
+/* Update CSS to target nested structure */
+.tiered-menu .top-tier {
+    display: block;
+    width: 300px;
+    padding: 5px;
+    color: #eee;
+    text-decoration: none;
+    font-family: 'Open Sans';
+    font-size: 10pt;
+    background: #606c88;
+    background: -moz-linear-gradient(top,  #606c88 0%, #3f4c6b 100%);
+    background: -webkit-linear-gradient(top,  #606c88 0%,#3f4c6b 100%);
+    background: linear-gradient(to bottom,  #606c88 0%,#3f4c6b 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#606c88', endColorstr='#3f4c6b',GradientType=0 );
+}
+
+.tiered-menu .top-tier:hover {
+    color: #fff;
+    text-shadow: #fff 0px 0px 5px;
+}
+
+.tiered-menu .collapsible {
+    width: 300px;
+}
+
+.tiered-menu .collapsible a {
+    color: #333;
+    text-indent: 20px;
+    background: #ddd;
+}
+
+.tiered-menu .collapsible .collapsible a {
+    color: #333;
+    background: #eeeeee;
+    text-indent: 40px;
+}
+
+.tiered-menu .collapsible .collapsible .collapsible a {
+    text-indent: 60px;
+}
+
