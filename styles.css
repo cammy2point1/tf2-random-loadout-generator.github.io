@@ -4,15 +4,19 @@
 }
 
 header {
-    background: #444;
+    background: #333;
     color: white;
     padding: 1vmin;
 }
 nav a {
     color: white;
     text-decoration: none;
-    margin: 0 10px;
+    vertical-align: middle;
     font-size: 1.5vmin;
+    margin-right: 1.5vmin;
+}
+nav a.active {
+    color: #666;
 }
 body {
     font-family: 'tf2build';
@@ -32,19 +36,19 @@ main {
 .radio-container {
     display: flex;
     flex-wrap: wrap;
-    width: auto;
-    height: 80vh; /* Adjust as needed to fit your layout */
+    width: 100%;
+    max-height: 80vh;
+    height: auto; /* Adjust as needed to fit your layout */
     overflow: hidden; /* Hide overflow to ensure no scrolling */
 }
 .radio-container label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    vertical-align: top;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 50%; /* Adjust width to fit buttons in columns */
-    max-height: calc(100% / 5.5); /* 5 rows if you want to fit 10 items */
+    max-width: 50%; /* Adjust width to fit buttons in columns */
     box-sizing: border-box;
+    margin:auto;
 }
 .radio-container input[type="radio"] {
     display: none;
@@ -87,7 +91,7 @@ main {
 }
 .class-ban-button{
     font-family: 'tf2build';
-    background-color: #9c9c9c;
+    background-color: #666;
     font-size: 1.5vmin; color: rgb(255, 255, 255);
     border-style: none;
     border-radius: 5px;
@@ -117,20 +121,22 @@ main {
     cursor: pointer;
 }
 
-/* Media query for 2 columns layout */
-@media (min-width: 600px) {
+/* Media query for a near-square aspect ratio (1:1) or more vertical (portrait) */
+@media (aspect-ratio <= 1/1.2) {
     .radio-container label {
-        max-width: 45%; /* Two columns with some space in between */
+        max-width: 100%; /* Single column layout */
+        width: 8vh;
+        
+    }
+    .quick-generate-btn {
+        padding: 2% 20%; /* Larger padding for buttons */
     }
 }
 
-/* Media query for 1 column layout on smaller screens */
-@media (max-width: 600px) {
+/* Media query for more horizontal aspect ratio (wider than 1:1) */
+@media (aspect-ratio > 1/1.2) {
     .radio-container label {
-        width: 80%; /* Full width for single column layout */
-    }
-    .quick-generate-btn{
-        padding: 30% 20%;
+        max-width: 42%; /* Two-column layout */
     }
 }
 
@@ -225,19 +231,19 @@ td {
 }
 
 
-/* Update CSS to target nested structure */
-.tiered-menu .top-tier {
+
+/* .tiered-menu .top-tier {
     display: block;
-    width: 90%;
+    width: 100%;
     padding: 10px;
-    color: #eee;
+    color: #ffffff;
     text-decoration: none;
     font-family: 'tf2Build';
     font-size: 15pt;
-    background: #606c88;
-    background: -moz-linear-gradient(top,  #606c88 0%, #3f4c6b 100%);
-    background: -webkit-linear-gradient(top,  #606c88 0%,#3f4c6b 100%);
-    background: linear-gradient(to bottom,  #606c88 0%,#3f4c6b 100%);
+    background: #666;
+    background: -moz-linear-gradient(top,  #666 0%, #333 100%);
+    background: -webkit-linear-gradient(top,  #666 0%,#333 100%);
+    background: linear-gradient(to bottom,  #666 0%,#333 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#606c88', endColorstr='#3f4c6b',GradientType=0 );
 }
 
@@ -247,21 +253,81 @@ td {
 }
 
 .tiered-menu .collapsible {
-    width: 300px;
+    width: 100%;
+    
 }
 
 .tiered-menu .collapsible a {
     color: #333;
-    text-indent: 20px;
     background: #ddd;
+    padding: 10px;
+    display: block;
 }
 
 .tiered-menu .collapsible .collapsible a {
-    color: #333;
-    background: #eeeeee;
-    text-indent: 40px;
+    color: #000000;
+    background: #0099ff;
+    padding: 10px;
+    display: block;
+    
+} */
+
+/* Top-tier (Class) */
+.top-tier {
+    font-size: 1.5em;
+    padding: 10px;
+    color: #ffffff;
+    background-color: #333333; /* Background for the class level */
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    border-bottom: 1px solid #444444;
 }
 
-.tiered-menu .collapsible .collapsible .collapsible a {
-    text-indent: 60px;
+/* Second-tier (Weapon Slot) */
+.second-tier {
+    font-size: 1.2em;
+    padding: 8px;
+    color: rgb(184,56,59);
+    background-color: rgb(242, 145, 87); /* Background for the weapon slot level */
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    border-bottom: 1px solid rgb(255, 194, 159);
 }
+.second-tier:hover{
+    background-color: rgb(255, 196, 161);
+}
+
+/* Third-tier (Weapons) */
+.third-tier {
+    display: block;
+    padding: 5px;
+    background-color: #eeeeee; /* Background color for the weapon items */
+    border-bottom: 1px solid #ffffff;
+}
+
+.third-tier label {
+    color: #000000; /* Text color for weapon labels */
+    cursor: pointer;
+    width: 100%;
+}
+
+.third-tier:hover {
+    background-color: #bbbbbb; /* Darken on hover for a visual effect */
+}
+
+/* Collapsible section styling */
+.collapsible {
+    display: none; /* Initially hide collapsible content */
+}
+
+/* Hover and active state for better user experience */
+.top-tier:hover, .weapon-ban label:hover {
+    background-color: #222222;
+}
+
+.top-tier:active, .weapon-ban label:active {
+    background-color: #111111;
+}
+
