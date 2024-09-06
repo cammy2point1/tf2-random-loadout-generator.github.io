@@ -3,6 +3,17 @@
     src: url(tf2build.ttf);
 }
 
+header {
+    background: #444;
+    color: white;
+    padding: 1vh;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 0.8vw;
+}
 body {
     font-family: 'tf2build';
     color: black;
@@ -25,7 +36,6 @@ main {
     height: 80vh; /* Adjust as needed to fit your layout */
     overflow: hidden; /* Hide overflow to ensure no scrolling */
 }
-
 .radio-container label {
     display: flex;
     flex-direction: column;
@@ -36,19 +46,28 @@ main {
     max-height: calc(100% / 5.5); /* 5 rows if you want to fit 10 items */
     box-sizing: border-box;
 }
-
 .radio-container input[type="radio"] {
     display: none;
 }
-
 .radio-container img {
     max-width: 100%;
     height: auto;
     transition: filter 0.3s;
 }
-
 .radio-container input[type="radio"]:checked + img {
     filter: brightness(60%);
+}
+
+
+.quick-generate-btn{
+    font-family: 'tf2build';
+    background-color: #444;
+    font-size: 1vw; color: white;
+    border-style: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    padding: 2% 20%;
+    cursor: pointer;
 }
 
 /* Media query for 2 columns layout */
@@ -61,17 +80,11 @@ main {
 /* Media query for 1 column layout on smaller screens */
 @media (max-width: 600px) {
     .radio-container label {
-        width: 100%; /* Full width for single column layout */
+        width: 80%; /* Full width for single column layout */
     }
-}
-
-.quick-generate-btn{
-    font-family: 'tf2build';
-    background-color: #444;
-    font-size: 1vw; color: white;
-    border-style: none;
-    margin-top: 10px;
-    padding: 2% 20%;
+    .quick-generate-btn{
+        padding: 40% 20%;
+    }
 }
 
 table {
@@ -87,27 +100,8 @@ td {
     vertical-align: top;
     
 }
-#quick-loadout-display {
-    border-radius: 10px;
-    padding: 10px;
-    border-spacing: 10px;
-    overflow-y: auto; /* Allow vertical scrolling if content exceeds height */
-}
-#quick-loadout-display img {
-    max-width: 100%;
-    height: auto;
-}
-header {
-    background: #444;
-    color: white;
-    padding: 10px;
-}
-nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
-    font-size: 0.8vw;
-}
+
+
 
 /*Loadout display stuff*/
 /* Ensure container takes up the full height of the viewport without overflow */
@@ -115,17 +109,15 @@ nav a {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 94vh; 
+    height: 95vh; 
     max-width: 75vh;
     overflow: hidden; 
 }
-
 
 /* Table stays within the viewport */
 .loadout-table {
     background-color: #333;
     border-radius: 10px;
-    padding: 10px;
     border-spacing: 10px;
     table-layout: fixed;
     max-height: 100%; /* Restricts table height to container */
@@ -133,40 +125,43 @@ nav a {
 
 /* Weapon cell takes 50% width and adjusts height */
 .loadout-weapon-cell {
-    margin: 10px;
+    margin: 1vh;
     width: 100%;
     vertical-align: top;
     height: 100%; /* Ensure it takes full height */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Distribute weapon slots evenly */
+    margin-bottom: 10px;
 }
 
 /* Each weapon slot adjusts based on the available space */
 .weapon-slot {
     background-color: #444;
     border-radius: 10px;
-    padding: 5px;
-    margin-bottom: 10px;
     border: 2px solid #666;
     text-align: center;
     flex-grow: 1; /* Ensures slots grow evenly */
-    max-height: 20vh; /* Adjusts max height relative to viewport */
+    display: flex;
+    flex-direction: column; /* Aligns content vertically */
+    justify-content: space-between; /* Adds spacing between the image and text */
+    max-height: 22vh; /* Adjusts max height relative to viewport */
+    margin-bottom: 10px;
 }
 
 /* Weapon images resize relative to the slot height */
 .weapon-slot img {
     max-width: 100%;
-    max-height: 100%; /* Prevents image overflow */
     object-fit: contain; /* Keeps the image contained */
+    flex-grow: 1; /* Allows the image to take up the remaining space */
+    max-height: 90%; /* Ensures the image doesn't take up the entire slot height */
 }
 
 /* Weapon name stays under the image */
 .weapon-name {
     font-family: 'tf2build';
     color: yellow;
-    margin: 0;
     font-size: 1vw; /* Use relative font size */
+    transform: translate(0, -200%);
 }
 
 /* Class image cell fits within the viewport */
@@ -225,4 +220,3 @@ nav a {
 .tiered-menu .collapsible .collapsible .collapsible a {
     text-indent: 60px;
 }
-
