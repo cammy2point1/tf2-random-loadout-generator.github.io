@@ -153,9 +153,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (selectedClass === "spy") {
             loadout.sapper = weapons.sapper[Math.floor(Math.random() * weapons.sapper.length)];
-            loadout.kit = weapons.kit[Math.floor(Math.random() * weapons.kit.length)];
         } else if (selectedClass === "engineer") {
-            loadout.pda = weapons.pda[Math.floor(Math.random() * weapons.pda.length)];
+            loadout.pda = weapons.pda[0];
         }
 
         return loadout;
@@ -187,6 +186,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const extraName = document.getElementById('extra-name');
     
         if (loadout.class === 'spy') {
+            document.getElementById('secondary-img').src = getWeaponImagePath(loadout.class, 'melee', loadout.melee);
+            document.getElementById('secondary-name').textContent = loadout.melee;
+        
+            document.getElementById('melee-img').src = getWeaponImagePath(loadout.class, 'secondary', loadout.secondary);
+            document.getElementById('melee-name').textContent = loadout.secondary;
+
             extraSlot.style.visibility = 'visible';
             extraImg.src = getWeaponImagePath(loadout.class, 'sapper', loadout.sapper);
             extraName.textContent = loadout.sapper;
