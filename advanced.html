@@ -15,21 +15,69 @@
         </nav>
     </header>
     <main>
-        <h1>Advanced Generate</h1>
-        <h2>Ban Classes</h2>
-        <div id="class-ban-section">
-            <!-- Class ban checkboxes will be inserted here -->
-        </div>
-        <h2>Ban Weapons</h2>
-        <div id="weapon-ban-section">
-            <!-- Weapon ban nested menus will be inserted here -->
-        </div>
-        <div>
-            <label for="reskin-checkbox">Enable Weapon Reskins:</label>
-            <input type="checkbox" id="reskin-checkbox">
-        </div>
-        <button id="adv-generate-btn">Generate Loadout</button>
-        <div id="adv-loadout-display"></div>
+        <table>
+            <tr>
+                <td style="width: 30%;">
+                    <div style="font-size: 2vw;">Advanced Generate</div>
+                    <div style="font-size: 2.5vmin; margin-top: 10px;">Ban Classes:</div>
+                    <input type="button" id="ban-all-btn" class="class-ban-button" value="Ban All" data-class-name="inv">
+                    <div id="class-ban-section" class="class-ban-section">
+                        <label><input type="checkbox" class="class-ban" value="scout" data-class-name="scout"><img src="icons/classes/Scout_emblem_RED.png" alt="Scout"></label>
+                        <label><input type="checkbox" class="class-ban" value="soldier" data-class-name="soldier"><img src="icons/classes/Soldier_emblem_RED.png" alt="Soldier"></label>
+                        <label><input type="checkbox" class="class-ban" value="pyro" data-class-name="pyro"><img src="icons/classes/Pyro_emblem_RED.png" alt="Pyro"></label>
+                        <label><input type="checkbox" class="class-ban" value="demoman" data-class-name="Demoman"><img src="icons/classes/Demoman_emblem_RED.png" alt="Demoman"></label>
+                        <label><input type="checkbox" class="class-ban" value="heavy" data-class-name="heavy"><img src="icons/classes/Heavy_emblem_RED.png" alt="Heavy"></label>
+                        <label><input type="checkbox" class="class-ban" value="engineer" data-class-name="engineer"><img src="icons/classes/Engineer_emblem_RED.png" alt="Engineer"></label>
+                        <label><input type="checkbox" class="class-ban" value="medic" data-class-name="medic"><img src="icons/classes/Medic_emblem_RED.png" alt="Medic"></label>
+                        <label><input type="checkbox" class="class-ban" value="sniper" data-class-name="sniper"><img src="icons/classes/Sniper_emblem_RED.png" alt="Sniper"></label>
+                        <label><input type="checkbox" class="class-ban" value="spy" data-class-name="spy"><img src="icons/classes/Spy_emblem_RED.png" alt="Spy"></label>
+                    </div>
+                    <div id="teehee">
+                        <label for="reskin-checkbox" style="font-size: 2.5vmin;">Enable Reskins:</label>
+                        <input type="checkbox" id="reskin-checkbox" style="width:2vmin; height:2vmin; transform: translate(0,5%);">
+                    </div>
+                    <div style="font-size: 2.5vmin;">Ban Weapons:</div>
+                    <div id="weapon-ban-section">
+                        <!-- Weapon ban nested menus will be inserted here -->
+                    </div>
+                    <button id="adv-generate-btn" class="adv-generate-btn">Generate Loadout</button>
+
+                </td>
+
+                <td style="max-width: 70%;">
+                    <div class="loadout-container">
+                        <table class="loadout-table">
+                            <tr>
+                                <td class="loadout-weapon-cell">
+                                    <div class="weapon-slot" id="primary-slot">
+                                        <img id="primary-img" src="">
+                                        <p class="weapon-name" id="primary-name"></p>
+                                    </div>
+                                    <div class="weapon-slot" id="secondary-slot">
+                                        <img id="secondary-img" src="">
+                                        <p class="weapon-name" id="secondary-name"></p>
+                                    </div>
+                                    <div class="weapon-slot" id="melee-slot">
+                                        <img id="melee-img" src="">
+                                        <p class="weapon-name" id="melee-name"></p>
+                                    </div>
+                                    <div class="weapon-slot" id="extra-slot">
+                                        <img id="extra-img" src="">
+                                        <p class="weapon-name" id="extra-name"></p>
+                                    </div>
+                                </td>
+                                <td class="class-image-cell">
+                                    <img id="class-img" class="class-image" src="" alt="">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                </td>
+            </tr>
+        </table>
+
+
     </main>
     <script src="advanced.js"></script>
 </body>
