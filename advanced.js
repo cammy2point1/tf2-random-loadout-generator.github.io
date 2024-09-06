@@ -45,7 +45,6 @@ const weaponDataWithReskins = {
         secondary: ["Cloak and Dagger", "Dead Ringer", "Enthusiast's Timepiece", "Invis Watch", "Quackenbirdt"],
         melee: ["Big Earner", "Black Rose", "Conniver's Kunai", "Golden Frying Pan", "Knife", "Prinny Machete", "Saxxy", "Sharp Dresser", "Spy-cicle", "Wanga Prick", "Your Eternal Reward"],
         sapper: ["Ap-Sap", "Red-Tape Recorder", "Electro Sapper", "Snack Attack"],
-        kit: ["Disguise Kit"]
     }
 };
 
@@ -96,7 +95,6 @@ const weaponData = {
         secondary: ["Cloak and Dagger", "Dead Ringer", "Invis Watch"],
         melee: ["Big Earner", "Conniver's Kunai", "Knife", "Spy-cicle", "Your Eternal Reward"],
         sapper: ["Red-Tape Recorder", "Electro Sapper"],
-        kit: ["Disguise Kit"]
     }
 };
 
@@ -144,9 +142,6 @@ document.addEventListener("DOMContentLoaded", function() {
         updateWeaponBanMenus(bannedClasses);
     });
 
-
-
-
     // Event listener for the reskin checkbox
     reskinCheckbox.addEventListener("change", function() {
         const bannedClasses = Array.from(document.querySelectorAll(".class-ban:checked")).map(cb => cb.value);
@@ -184,83 +179,79 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Skip this class if it's banned
                 return;
             }
-    
+        
             const weapons = useReskins ? weaponDataWithReskins[className] : weaponData[className];
-    
+        
             const classDiv = document.createElement("div");
             classDiv.classList.add("tiered-menu");
             classDiv.dataset.class = className; // Store class name in dataset
-    
+        
             const classAnchor = document.createElement("a");
-            classAnchor.classList.add("top-tier");
+            classAnchor.classList.add("top-tier"); // Only class should be top-tier
             classAnchor.href = "#";
             classAnchor.textContent = className.charAt(0).toUpperCase() + className.slice(1);
             classDiv.appendChild(classAnchor);
-    
+        
             const collapsibleDiv = document.createElement("div");
             collapsibleDiv.classList.add("collapsible");
             collapsibleDiv.style.display = prevSlotMenuStates[className].open ? "block" : "none"; // Maintain the open/close state
-    
+        
             Object.keys(weapons).forEach(weaponType => {
                 const weaponTypeDiv = document.createElement("div");
                 weaponTypeDiv.classList.add("tiered-menu");
-    
+        
                 const weaponTypeAnchor = document.createElement("a");
-                weaponTypeAnchor.classList.add("top-tier");
+                weaponTypeAnchor.classList.add("second-tier"); // Change to "second-tier"
                 weaponTypeAnchor.href = "#";
                 weaponTypeAnchor.textContent = weaponType.charAt(0).toUpperCase() + weaponType.slice(1);
                 weaponTypeDiv.appendChild(weaponTypeAnchor);
-    
+        
                 const weaponCollapsibleDiv = document.createElement("div");
                 weaponCollapsibleDiv.classList.add("collapsible");
                 weaponCollapsibleDiv.style.display = prevSlotMenuStates[className].slots[weaponType] ? "block" : "none"; // Maintain the open/close state
-    
+        
                 const allWeapons = useReskins ? weaponDataWithReskins[className][weaponType] : weaponData[className][weaponType];
-    
+        
                 allWeapons.forEach(weapon => {
-                    if (useReskins && bannedClasses.includes(className)) {
-                        // Skip reskin weapons if class is banned and reskin is enabled
-                        return;
-                    }
-    
                     const weaponCheckbox = document.createElement("input");
                     weaponCheckbox.type = "checkbox";
                     weaponCheckbox.value = weapon;
                     weaponCheckbox.classList.add("weapon-ban");
                     weaponCheckbox.dataset.className = className; // Store class name in dataset
-    
+                
                     const weaponLabel = document.createElement("label");
+                    weaponLabel.classList.add("third-tier"); // Assign the 'third-tier' class to the label
                     weaponLabel.textContent = weapon;
-                    weaponLabel.appendChild(weaponCheckbox);
-    
-                    const weaponAnchor = document.createElement("a");
-                    weaponAnchor.href = "#";
-                    weaponAnchor.appendChild(weaponLabel);
-    
-                    const weaponItemDiv = document.createElement("div");
-                    weaponItemDiv.appendChild(weaponAnchor);
-                    weaponCollapsibleDiv.appendChild(weaponItemDiv);
+                
+                    // Append the checkbox inside the label, making the entire label clickable
+                    weaponLabel.insertBefore(weaponCheckbox, weaponLabel.firstChild);
+                
+                    // Append the label directly to the collapsible div (no need for separate div)
+                    weaponCollapsibleDiv.appendChild(weaponLabel);
                 });
-    
+                
+                
+        
                 weaponTypeDiv.appendChild(weaponCollapsibleDiv);
                 collapsibleDiv.appendChild(weaponTypeDiv);
-    
+        
                 // Toggle display of weapon slot menu
                 weaponTypeAnchor.addEventListener("click", function() {
                     weaponCollapsibleDiv.style.display = weaponCollapsibleDiv.style.display === "none" ? "block" : "none";
                     slotMenuStates[className].slots[weaponType] = weaponCollapsibleDiv.style.display === "block";
                 });
             });
-    
+        
             classDiv.appendChild(collapsibleDiv);
             weaponBanSection.appendChild(classDiv);
-    
+        
             // Toggle display of class menu
             classAnchor.addEventListener("click", function() {
                 collapsibleDiv.style.display = collapsibleDiv.style.display === "none" ? "block" : "none";
                 slotMenuStates[className].open = collapsibleDiv.style.display === "block";
             });
         });
+        
     }
     
 
