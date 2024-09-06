@@ -138,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const loadout = generateQuickLoadout(selectedClass, currentWeaponData);
-        displayLoadout(loadout, quickLoadoutDisplay);
+        displayLoadout(loadout);
     });
 
     // Functions to generate and display loadout
