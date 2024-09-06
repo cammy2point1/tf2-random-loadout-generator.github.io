@@ -6,13 +6,13 @@
 header {
     background: #444;
     color: white;
-    padding: 1vh;
+    padding: 1vmin;
 }
 nav a {
     color: white;
     text-decoration: none;
     margin: 0 10px;
-    font-size: 0.8vw;
+    font-size: 1.5vmin;
 }
 body {
     font-family: 'tf2build';
@@ -58,15 +58,62 @@ main {
     filter: brightness(60%);
 }
 
+/* Advanced ban classes */
+/*Class emblem stuff*/
+.class-ban-section {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden; /* Hide overflow to ensure no scrolling */
+}
+.class-ban-section label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 10.5%; /* Adjust width to fit buttons in columns */
+    box-sizing: border-box;
+}
+.class-ban-section input[type="checkbox"] {
+    display: none;
+}
+.class-ban-section img {
+    max-width: 100%;
+    height: auto;
+    transition: filter 0.3s;
+}
+.class-ban-section input[type="checkbox"]:checked + img {
+    filter: brightness(60%);
+}
+.class-ban-button{
+    font-family: 'tf2build';
+    background-color: #9c9c9c;
+    font-size: 1.5vmin; color: rgb(255, 255, 255);
+    border-style: none;
+    border-radius: 5px;
+    padding: 5px 5px;
+    cursor: pointer;
+}
+
 
 .quick-generate-btn{
     font-family: 'tf2build';
     background-color: #444;
-    font-size: 1vw; color: white;
+    font-size: 2vmin; color: white;
     border-style: none;
     border-radius: 10px;
     margin-top: 10px;
     padding: 2% 20%;
+    cursor: pointer;
+}
+.adv-generate-btn{
+    font-family: 'tf2build';
+    background-color: #444;
+    font-size: 2vmin; color: white;
+    border-style: none;
+    border-radius: 10px;
+    margin-top: 10px;
+    padding: 2% 29%;
     cursor: pointer;
 }
 
@@ -83,7 +130,7 @@ main {
         width: 80%; /* Full width for single column layout */
     }
     .quick-generate-btn{
-        padding: 40% 20%;
+        padding: 30% 20%;
     }
 }
 
@@ -98,7 +145,6 @@ table {
 }
 td {
     vertical-align: top;
-    
 }
 
 
@@ -106,12 +152,12 @@ td {
 /*Loadout display stuff*/
 /* Ensure container takes up the full height of the viewport without overflow */
 .loadout-container {
-    display: flex;
     justify-content: center;
     align-items: center;
     height: 95vh; 
     max-width: 75vh;
-    overflow: hidden; 
+    overflow: hidden;
+    margin:auto;
 }
 
 /* Table stays within the viewport */
@@ -119,7 +165,6 @@ td {
     background-color: #333;
     border-radius: 10px;
     border-spacing: 10px;
-    table-layout: fixed;
     max-height: 100%; /* Restricts table height to container */
 }
 
@@ -160,7 +205,7 @@ td {
 .weapon-name {
     font-family: 'tf2build';
     color: yellow;
-    font-size: 1vw; /* Use relative font size */
+    font-size: 3vmin; /* Use relative font size */
     transform: translate(0, -200%);
 }
 
@@ -183,12 +228,12 @@ td {
 /* Update CSS to target nested structure */
 .tiered-menu .top-tier {
     display: block;
-    width: 300px;
-    padding: 5px;
+    width: 90%;
+    padding: 10px;
     color: #eee;
     text-decoration: none;
-    font-family: 'Open Sans';
-    font-size: 10pt;
+    font-family: 'tf2Build';
+    font-size: 15pt;
     background: #606c88;
     background: -moz-linear-gradient(top,  #606c88 0%, #3f4c6b 100%);
     background: -webkit-linear-gradient(top,  #606c88 0%,#3f4c6b 100%);
