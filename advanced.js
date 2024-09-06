@@ -58,7 +58,7 @@ const weaponData = {
     soldier: {
         primary: ["Air Strike", "Beggar's Bazooka", "Black Box", "Cow Mangler 5000", "Direct Hit", "Liberty Launcher", "Original", "Rocket Jumper", "Rocket Launcher"],
         secondary: ["B.A.S.E. Jumper", "Battalion's Backup", "Buff Banner", "Concheror", "Gunboats", "Mantreads", "Panic Attack", "Reserve Shooter", "Righteous Bison", "Shotgun"],
-        melee: ["Disciplinary Action", "Equalizer", "Escape Plan", "Half-Zatoichi", "Market Gardener", "Pain Train", "Shovel"]
+        melee: ["Disciplinary Action", "Equalizer", "Escape Plan", "Frying Pan", "Half-Zatoichi", "Market Gardener", "Pain Train", "Shovel"]
     },
     pyro: {
         primary: ["Backburner", "Degreaser", "Dragon's Fury", "Flame Thrower", "Nostromo Napalmer", "Phlogistinator", "Rainblower"],
@@ -101,12 +101,11 @@ const weaponData = {
 };
 
 
-
 document.addEventListener("DOMContentLoaded", function() {
     const classBanSection = document.getElementById("class-ban-section");
     const weaponBanSection = document.getElementById("weapon-ban-section");
     const advGenerateBtn = document.getElementById("adv-generate-btn");
-    const advLoadoutDisplay = document.getElementById("adv-loadout-display");
+    const reskinCheckbox = document.getElementById("reskin-checkbox");
 
     // Store banned weapons for each class
     const bannedWeapons = {};
@@ -116,16 +115,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Dynamically generate class ban checkboxes
     Object.keys(weaponData).forEach(className => {
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.value = className;
-        checkbox.classList.add("class-ban");
-        checkbox.dataset.className = className; // Store class name in dataset
-        const label = document.createElement("label");
-        label.appendChild(checkbox);
-        label.appendChild(document.createTextNode(` ${className}`));
-        classBanSection.appendChild(label);
-
         // Initialize banned weapons object and slot menu state for this class
         bannedWeapons[className] = [];
         slotMenuStates[className] = {
@@ -140,7 +129,23 @@ document.addEventListener("DOMContentLoaded", function() {
         updateWeaponBanMenus(bannedClasses);
     });
 
-    const reskinCheckbox = document.getElementById("reskin-checkbox");
+     // Add event listener for the "ban all" button
+     const banAllBtn = document.getElementById("ban-all-btn");
+     banAllBtn.addEventListener("click", function() {
+        const checkboxes = document.querySelectorAll(".class-ban");
+        const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = !allChecked; // Invert the checked state
+        });
+
+        // Update weapon ban menus based on new selections
+        const bannedClasses = Array.from(document.querySelectorAll(".class-ban:checked")).map(cb => cb.value);
+        updateWeaponBanMenus(bannedClasses);
+    });
+
+
+
 
     // Event listener for the reskin checkbox
     reskinCheckbox.addEventListener("change", function() {
@@ -155,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const bannedClasses = Array.from(document.querySelectorAll(".class-ban:checked")).map(cb => cb.value);
         const useReskins = reskinCheckbox.checked;
         const loadout = generateAdvancedLoadout(bannedClasses, useReskins);
-        displayLoadout(loadout, advLoadoutDisplay);
+        displayLoadout(loadout);
     });
 
     function updateWeaponBanMenus(bannedClasses, useReskins) {
@@ -173,8 +178,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // Clear weapon ban section
         weaponBanSection.innerHTML = "";
     
-        // Re-append reskin checkbox
-        weaponBanSection.appendChild(reskinCheckbox);
     
         Object.keys(weaponData).forEach(className => {
             if (bannedClasses.includes(className)) {
@@ -307,58 +310,71 @@ document.addEventListener("DOMContentLoaded", function() {
             // If any category has no available weapons, return null to indicate failure
             return null;
         }
-    
-        // Randomly select one weapon from each category
-        return {
+
+        const loadout = {
             class: selectedClass,
             primary: filteredWeapons.primary[Math.floor(Math.random() * filteredWeapons.primary.length)],
             secondary: filteredWeapons.secondary[Math.floor(Math.random() * filteredWeapons.secondary.length)],
             melee: filteredWeapons.melee[Math.floor(Math.random() * filteredWeapons.melee.length)]
         };
+
+        if (selectedClass === "spy") {
+            loadout.sapper = weapons.sapper[Math.floor(Math.random() * filteredWeapons.sapper.length)];
+        } else if (selectedClass === "engineer") {
+            loadout.pda = weapons.pda[0];
+        }
+    
+        return loadout;
     }
     
 
-
-
-    function displayLoadout(loadout, displayElement) {
-        // Function to generate the image path for a weapon
+    function displayLoadout(loadout) {
         function getWeaponImagePath(className, slot, weapon) {
-            // Replace spaces with underscores to match file naming conventions
             const sanitizedWeaponName = weapon.replace(/ /g, '_');
             return `icons/weapons/${className}/${slot}/${sanitizedWeaponName}.png`;
         }
     
-        // Function to generate the image path for a class
         function getClassImagePath(className) {
             return `icons/classes/${className}.png`;
         }
     
-        // Function to generate the scaled down image tag
-        function getScaledImageTag(imagePath, altText) {
-            return `<img src="${imagePath}" alt="${altText}" style="max-width: 250px; height: auto;">`;
+        // Set images and weapon names
+        document.getElementById('primary-img').src = getWeaponImagePath(loadout.class, 'primary', loadout.primary);
+        document.getElementById('primary-name').textContent = loadout.primary;
+    
+        document.getElementById('secondary-img').src = getWeaponImagePath(loadout.class, 'secondary', loadout.secondary);
+        document.getElementById('secondary-name').textContent = loadout.secondary;
+    
+        document.getElementById('melee-img').src = getWeaponImagePath(loadout.class, 'melee', loadout.melee);
+        document.getElementById('melee-name').textContent = loadout.melee;
+    
+        // Handle extra slot (sapper for Spy or PDA for Engineer)
+        const extraSlot = document.getElementById('extra-slot');
+        const extraImg = document.getElementById('extra-img');
+        const extraName = document.getElementById('extra-name');
+    
+        if (loadout.class === 'spy') {
+            document.getElementById('secondary-img').src = getWeaponImagePath(loadout.class, 'melee', loadout.melee);
+            document.getElementById('secondary-name').textContent = loadout.melee;
+        
+            document.getElementById('melee-img').src = getWeaponImagePath(loadout.class, 'secondary', loadout.secondary);
+            document.getElementById('melee-name').textContent = loadout.secondary;
+
+            extraSlot.style.visibility = 'visible';
+            extraImg.src = getWeaponImagePath(loadout.class, 'sapper', loadout.sapper);
+            extraName.textContent = loadout.sapper;
+        } else if (loadout.class === 'engineer') {
+            extraSlot.style.visibility = 'visible';
+            extraImg.src = getWeaponImagePath(loadout.class, 'pda', loadout.pda);
+            extraName.textContent = loadout.pda;
+        } else {
+            extraSlot.style.visibility = 'hidden';
         }
     
-        const classImagePath = getClassImagePath(loadout.class);
-        const classImageTag = `<img src="${classImagePath}" alt="${loadout.class}" style="max-width: 100%; height: 200px;">`;
-    
-        displayElement.innerHTML = `
-            <div class="class-image">
-                ${classImageTag}
-            </div>
-            <h3>${loadout.class.toUpperCase()}</h3>
-            <div class="loadout-item">
-                <p>Primary: ${loadout.primary}</p>
-                ${getScaledImageTag(getWeaponImagePath(loadout.class, 'primary', loadout.primary), loadout.primary)}
-            </div>
-            <div class="loadout-item">
-                <p>Secondary: ${loadout.secondary}</p>
-                ${getScaledImageTag(getWeaponImagePath(loadout.class, 'secondary', loadout.secondary), loadout.secondary)}
-            </div>
-            <div class="loadout-item">
-                <p>Melee: ${loadout.melee}</p>
-                ${getScaledImageTag(getWeaponImagePath(loadout.class, 'melee', loadout.melee), loadout.melee)}
-            </div>
-        `;
+        // Set class image
+        const classImg = document.getElementById('class-img');
+        classImg.src = getClassImagePath(loadout.class);
+        classImg.alt = loadout.class;
     }
 
 });
