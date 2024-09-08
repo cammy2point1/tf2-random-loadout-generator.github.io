@@ -19,8 +19,13 @@
             <tr>
                 <td style="width: 30%;">
                     <div style="font-size: 2vw;">Advanced Generate</div>
-                    <div style="font-size: 2.5vmin; margin-top: 10px;">Ban Classes:</div>
-                    <input type="button" id="ban-all-btn" class="class-ban-button" value="Ban All" data-class-name="inv">
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 2.5vmin; margin-top: 10px;">
+                        <span>Ban Classes:</span>
+                        <div>
+                            <input type="button" id="ban-all-btn" class="class-ban-button" value="Ban All" data-class-name="inv">
+                            <input type="button" id="reset-all-btn" class="class-ban-button" value="Reset">
+                        </div>
+                    </div>
                     <div id="class-ban-section" class="class-ban-section">
                         <label><input type="checkbox" class="class-ban" value="scout" data-class-name="scout"><img src="icons/classes/Scout_emblem_RED.png" alt="Scout"></label>
                         <label><input type="checkbox" class="class-ban" value="soldier" data-class-name="soldier"><img src="icons/classes/Soldier_emblem_RED.png" alt="Soldier"></label>
@@ -32,7 +37,7 @@
                         <label><input type="checkbox" class="class-ban" value="sniper" data-class-name="sniper"><img src="icons/classes/Sniper_emblem_RED.png" alt="Sniper"></label>
                         <label><input type="checkbox" class="class-ban" value="spy" data-class-name="spy"><img src="icons/classes/Spy_emblem_RED.png" alt="Spy"></label>
                     </div>
-                    <div id="teehee">
+                    <div>
                         <label for="reskin-checkbox" style="font-size: 2.5vmin; cursor: pointer;">Enable Reskins:</label>
                         <input type="checkbox" id="reskin-checkbox" style="width:2vmin; height:2vmin; transform: translate(0,5%); cursor: pointer; margin-bottom: 20px;">
                     </div>
