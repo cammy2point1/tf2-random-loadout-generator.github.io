@@ -231,30 +231,46 @@ td {
     max-height: 70vh; /* Limits the class image to a maximum viewport height */
 }
 
-/* Top-tier (Class) */
 .top-tier {
     font-size: 2vmin;
     padding: 10px;
     color: #ffffff;
     background-color: #333333;
     cursor: pointer;
-    display: block;
+    display: flex; /* Use flexbox to align buttons and text in a row */
+    justify-content: space-between; /* Ensures text is on the left, buttons on the right */
     text-decoration: none;
     border-bottom: 1px solid #444444;
-    border-radius: 0; /* Default, no rounded corners */
+    align-items: center; /* Vertically centers the buttons and text */
 }
+
+.ban-reset-buttons {
+    display: flex;
+    gap: 10px; /* Adds space between the buttons */
+}
+.ban-reset-buttons button {
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
 
 /* First top-tier entry: rounded top corners */
 .tiered-menu:first-of-type .top-tier {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-
-/* Last top-tier entry: rounded bottom corners */
 .tiered-menu:last-of-type .top-tier {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    border-bottom: none; /* Remove bottom border for smoothness */
+    border-bottom: none;
+}
+
+/* Override rounded corners when the menu is open */
+.tiered-menu.open > .top-tier {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: 1px solid #444444; /* Ensure border is visible */
 }
 
 /* Second-tier (Weapon Slot) */
@@ -264,12 +280,23 @@ td {
     color: rgb(184,56,59);
     background-color: rgb(242, 145, 87); /* Background for the weapon slot level */
     cursor: pointer;
-    display: block;
+    display: flex;
+    justify-content: space-between; /* Ensures text is on the left, buttons on the right */
     text-decoration: none;
     border-bottom: 1px solid rgb(255, 194, 159);
+    align-items: center;
 }
 .second-tier:hover{
     background-color: rgb(255, 196, 161);
+}
+.slot-ban-reset-buttons {
+    display: flex;
+    gap: 10px;
+}
+.slot-ban-reset-buttons button {
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 /* Third-tier (Weapons) */
