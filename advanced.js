@@ -127,19 +127,32 @@ document.addEventListener("DOMContentLoaded", function() {
         updateWeaponBanMenus(bannedClasses);
     });
 
-     // Add event listener for the "ban all" button
-     const banAllBtn = document.getElementById("ban-all-btn");
-     banAllBtn.addEventListener("click", function() {
+    // Add event listener for the "ban all" button
+    const banAllBtn = document.getElementById("ban-all-btn");
+    // Event listener for the "ban all" button (check all class checkboxes)
+    banAllBtn.addEventListener("click", function() {
         const checkboxes = document.querySelectorAll(".class-ban");
-        const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
 
         checkboxes.forEach(checkbox => {
-            checkbox.checked = !allChecked; // Invert the checked state
+            checkbox.checked = true; // Check all class checkboxes
         });
 
         // Update weapon ban menus based on new selections
         const bannedClasses = Array.from(document.querySelectorAll(".class-ban:checked")).map(cb => cb.value);
         updateWeaponBanMenus(bannedClasses);
+    });
+
+    // Add event listener for the "reset" button
+    const resetAllBtn = document.getElementById("reset-all-btn");
+    resetAllBtn.addEventListener("click", function() {
+        const checkboxes = document.querySelectorAll(".class-ban");
+
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false; // Uncheck all class checkboxes
+        });
+
+        // Reset weapon ban menus (empty banned classes)
+        updateWeaponBanMenus([]);
     });
 
     // Event listener for the reskin checkbox
@@ -173,86 +186,88 @@ document.addEventListener("DOMContentLoaded", function() {
         // Clear weapon ban section
         weaponBanSection.innerHTML = "";
     
-    
         Object.keys(weaponData).forEach(className => {
             if (bannedClasses.includes(className)) {
                 // Skip this class if it's banned
                 return;
             }
-        
+    
             const weapons = useReskins ? weaponDataWithReskins[className] : weaponData[className];
-        
+    
             const classDiv = document.createElement("div");
             classDiv.classList.add("tiered-menu");
             classDiv.dataset.class = className; // Store class name in dataset
-        
+    
             const classAnchor = document.createElement("a");
             classAnchor.classList.add("top-tier"); // Only class should be top-tier
             classAnchor.href = "#";
             classAnchor.textContent = className.charAt(0).toUpperCase() + className.slice(1);
             classDiv.appendChild(classAnchor);
-        
+    
             const collapsibleDiv = document.createElement("div");
             collapsibleDiv.classList.add("collapsible");
             collapsibleDiv.style.display = prevSlotMenuStates[className].open ? "block" : "none"; // Maintain the open/close state
-        
+    
             Object.keys(weapons).forEach(weaponType => {
                 const weaponTypeDiv = document.createElement("div");
                 weaponTypeDiv.classList.add("tiered-menu");
-        
+    
                 const weaponTypeAnchor = document.createElement("a");
                 weaponTypeAnchor.classList.add("second-tier"); // Change to "second-tier"
                 weaponTypeAnchor.href = "#";
                 weaponTypeAnchor.textContent = weaponType.charAt(0).toUpperCase() + weaponType.slice(1);
                 weaponTypeDiv.appendChild(weaponTypeAnchor);
-        
+    
                 const weaponCollapsibleDiv = document.createElement("div");
                 weaponCollapsibleDiv.classList.add("collapsible");
                 weaponCollapsibleDiv.style.display = prevSlotMenuStates[className].slots[weaponType] ? "block" : "none"; // Maintain the open/close state
-        
+    
                 const allWeapons = useReskins ? weaponDataWithReskins[className][weaponType] : weaponData[className][weaponType];
-        
+    
                 allWeapons.forEach(weapon => {
                     const weaponCheckbox = document.createElement("input");
                     weaponCheckbox.type = "checkbox";
                     weaponCheckbox.value = weapon;
                     weaponCheckbox.classList.add("weapon-ban");
                     weaponCheckbox.dataset.className = className; // Store class name in dataset
-                
+    
+                    // Check if the weapon is already banned and pre-check the checkbox
+                    if (bannedWeapons[className].includes(weapon)) {
+                        weaponCheckbox.checked = true;
+                    }
+    
                     const weaponLabel = document.createElement("label");
                     weaponLabel.classList.add("third-tier"); // Assign the 'third-tier' class to the label
                     weaponLabel.textContent = weapon;
-                
+    
                     // Append the checkbox inside the label, making the entire label clickable
                     weaponLabel.insertBefore(weaponCheckbox, weaponLabel.firstChild);
-                
+    
                     // Append the label directly to the collapsible div (no need for separate div)
                     weaponCollapsibleDiv.appendChild(weaponLabel);
                 });
-                
-                
-        
+    
                 weaponTypeDiv.appendChild(weaponCollapsibleDiv);
                 collapsibleDiv.appendChild(weaponTypeDiv);
-        
+    
                 // Toggle display of weapon slot menu
                 weaponTypeAnchor.addEventListener("click", function() {
                     weaponCollapsibleDiv.style.display = weaponCollapsibleDiv.style.display === "none" ? "block" : "none";
                     slotMenuStates[className].slots[weaponType] = weaponCollapsibleDiv.style.display === "block";
                 });
             });
-        
+    
             classDiv.appendChild(collapsibleDiv);
             weaponBanSection.appendChild(classDiv);
-        
+    
             // Toggle display of class menu
             classAnchor.addEventListener("click", function() {
                 collapsibleDiv.style.display = collapsibleDiv.style.display === "none" ? "block" : "none";
                 slotMenuStates[className].open = collapsibleDiv.style.display === "block";
             });
         });
-        
     }
+    
     
 
     // Generate initial weapon ban menus
