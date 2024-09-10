@@ -31,6 +31,7 @@ main {
     flex-grow: 1; /* Allows main content to grow and take available space */
     overflow: auto;
     padding: 10px;
+    background: white;
 }
 
 /*Class emblem stuff*/
